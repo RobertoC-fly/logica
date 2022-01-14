@@ -145,8 +145,42 @@ const subFormula = (formula, tamanho) => {
         }
     }
 
+    //(p>p)
     let parada;
+    let parentese = 0;
+    let posicao = 0;
     let index = 0;
+
+    for (index = 0; index <= formula.length; index++) {
+        subFormulaUm.push(formula[index])
+    }
+    for (index = 0; index < subFormulaUm.length; index++) {
+        if (
+            subFormulaUm[index] == ">"
+            && subFormulaUm[index - 1] != '(' 
+            && subFormulaUm[index - 1] != '#' 
+            && subFormulaUm[index - 1] != '&' 
+            && subFormulaUm[index - 1] != ')'            
+            && subFormulaUm[index - 1] != '>'
+        ) {
+            subFormulaUm[index - 1] = "-" + subFormulaUm[index - 1]
+            subFormulaUm[index] = "#"
+        }else if (
+            subFormulaUm[index] == ">"
+            && subFormulaUm[index - 1] == ')'
+        ) {
+            parentese = 1
+            posicao = index;
+            while (parentese != 0) {
+                subFormulaUm[posicao] == '(' ? parentese-- : posicao--
+                if (parentese == 0) {
+                    subFormulaUm.splice(posicao, 0, "-");
+                }
+            }            
+        }        
+    }
+    console.log(subFormulaUm);
+    /*
     for (const key in formula) {
         formula[key] == ">" ? parada = key : '';
     }
@@ -173,6 +207,7 @@ const subFormula = (formula, tamanho) => {
                 && subFormulaUm[index] != '&' 
                 && subFormulaUm[index] != ')'
                 && subFormulaUm[index] != '-'
+                && subFormulaUm[index] != '>'
             ) {
 
                 if ( subFormulaUm[index - 1] == '-'  ) {
@@ -190,7 +225,8 @@ const subFormula = (formula, tamanho) => {
             }
         }
     }
-    
+    */
+   
     document.getElementById("atomos").innerHTML = '';
     document.getElementById("negacao").innerHTML = subFormulaUm;
     document.getElementById("subformulas").innerHTML = subFormulaDois;
