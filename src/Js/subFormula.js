@@ -178,6 +178,61 @@ const subFormula = (formula, tamanho) => {
             subFormulaUm[index] = "#"
         }
     }
+    for (index = 0; index < subFormulaUm.length; index++) {
+        if (
+            subFormulaUm[index] == ">"
+            && subFormulaUm[index - 1] != '(' 
+            && subFormulaUm[index - 1] != '#' 
+            && subFormulaUm[index - 1] != '&' 
+            && subFormulaUm[index - 1] != ')'            
+            && subFormulaUm[index - 1] != '>'
+        ) {
+            subFormulaUm[index - 1] = "-" + subFormulaUm[index - 1]
+            subFormulaUm[index] = "#"
+        }else if (
+            subFormulaUm[index] == ">"
+            && subFormulaUm[index - 1] == ')'
+        ) {
+            parentese = 1
+            posicao = index;
+            while (parentese != 0) {
+                subFormulaUm[posicao] == '(' ? parentese-- : posicao--                
+            }
+            subFormulaUm[posicao] = "-" + subFormulaUm[posicao]
+            subFormulaUm[index] = "#"
+        }
+    }
+    posicao = 0;
+    let re = /-/
+    let letras = /[a-z]/i
+    parentese = 0;
+
+    for (index = 0; index < subFormulaUm.length; index++) {
+        if (subFormulaUm[index] == "-(" || (subFormulaUm[index] == "-" && subFormulaUm[index + 1] == "(")) {
+            subFormulaUm[index] == "-(" ? subFormulaUm[index] = "(" : ''
+            posicao = index;            
+            while (subFormulaUm[posicao] != ")") {
+                if (re.test(subFormulaUm[posicao])) {
+                    subFormulaUm[posicao] = '-' + subFormulaUm[posicao]
+                }else if (subFormulaUm[posicao] == "#") {
+                    subFormulaUm[posicao] = "&" 
+                }else if (subFormulaUm[posicao] == "&") {
+                    subFormulaUm[posicao] = "#" 
+                }else if (letras.test(subFormulaUm[posicao])){
+                    subFormulaUm[posicao] = "-" + subFormulaUm[posicao]
+                }                
+                posicao++
+            }
+        }
+        if (subFormulaUm[index] == "#") {
+            if (letras.test(subFormulaUm[index+1])) {
+                subFormulaUm[index + 1] = "-" + subFormulaUm[index + 1]
+                subFormulaUm[index] = "&"
+            }
+        }
+        
+
+    }
     console.log(subFormulaUm);
     /*
     for (const key in formula) {
