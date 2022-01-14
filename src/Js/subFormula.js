@@ -172,12 +172,11 @@ const subFormula = (formula, tamanho) => {
             parentese = 1
             posicao = index;
             while (parentese != 0) {
-                subFormulaUm[posicao] == '(' ? parentese-- : posicao--
-                if (parentese == 0) {
-                    subFormulaUm.splice(posicao, 0, "-");
-                }
-            }            
-        }        
+                subFormulaUm[posicao] == '(' ? parentese-- : posicao--                
+            }
+            subFormulaUm[posicao] = "-" + subFormulaUm[posicao]
+            subFormulaUm[index] = "#"
+        }
     }
     console.log(subFormulaUm);
     /*
