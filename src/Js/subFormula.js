@@ -207,7 +207,7 @@ const subFormula = (formula, tamanho) => {
     let letras = /[a-z]/i
     parentese = 0;
 
-    for (index = 0; index < subFormulaUm.length; index++) {
+    for (index = 0; index < subFormulaUm.length; index++) {        
         if (subFormulaUm[index] == "-(" || (subFormulaUm[index] == "-" && subFormulaUm[index + 1] == "(")) {
             subFormulaUm[index] == "-(" ? subFormulaUm[index] = "(" : ''
             posicao = index;            
